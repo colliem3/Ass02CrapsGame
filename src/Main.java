@@ -1,55 +1,70 @@
-import java.util.*;
-public class Main
-{
-    public static void main(String[] args)
-    {
-        Scanner scan = new Scanner(System.in);
-        Random randNumber = new Random();
+import java.util.Random;
+import java.util.Scanner;
 
-        int sum, point;
-        boolean play = true;
-        String answer;
 
-        while (play) {
-            sum = randNumber.nextInt(12) + 1;
-            point = sum;
+public class Main {
+    public static void main(String[] args) {
+        Random rnd = new Random();
+        Scanner in = new Scanner(System.in);
 
-            if (sum == 7 || sum == 11) {
-                System.out.println("Sum of first roll = " + sum);
-                System.out.println("Player wins!");
-            }
-            else if (sum == 2 || sum == 3 || sum == 12) {
-                System.out.println("Sum of first roll = " + sum);
-                System.out.println("Player loses!");
-            }
-            else {
-                if (sum == 4 || sum == 5 || sum == 6 || sum == 8 || sum == 9 || sum == 10) {
-                    System.out.println("Sum of first roll = " + sum);
-                    System.out.println(sum + " is the point");
+        String playAgain = "";
+        int die1 = rnd.nextInt(6) + 1;
+        int die2 = rnd.nextInt(6) + 1;
+        int diceSum = die1 + die2;
+        boolean done = true;
+        boolean valid = true;
+
+
+        do {
+            while (true) {
+                System.out.println("You rolled " + diceSum + " for this turn");
+                if (diceSum == 7 || diceSum == 11) {
+                    System.out.println("You got a natural.");
+                    break;
+                } else if (diceSum == 2 || diceSum == 3 || diceSum == 12) {
+                    System.out.println("You crapped out.");
+                    break;
+                } else {
+                    System.out.println(diceSum + " is the point now. Roll again. ");
+
                 }
-                else if (sum == 7) {
-                    System.out.println("Sum of next roll = " + sum);
-                    System.out.println("Player loses!");
+
+
+                while (true) {
+                    int die3 = rnd.nextInt(6) + 1;
+                    int die4 = rnd.nextInt(6) + 1;
+                    int diceSum2 = die3 + die4;
+
+                    System.out.println("You rolled " + diceSum2);
+
+                    if (diceSum2 == diceSum) {
+                        System.out.println("You won!");
+                        break;
+                    } else if (diceSum2 == 7) {
+                        System.out.println("You lost!");
+                        break;
+                    } else {
+                        System.out.println("You got " + diceSum2 + " go again");
+
+                    }
                 }
-                else if (sum == point) {
-                    System.out.println("Sum of next roll equal the point: " + point);
-                    System.out.println("Player wins!");
+                break;
+            }
+            System.out.println("Do you want to play again? [Y/N]");
+            do {
+                playAgain = in.nextLine();
+                if (playAgain.equalsIgnoreCase("Y")) {
+                    done = false;
+                    valid = true;
+                } else if (playAgain.equalsIgnoreCase("N")) {
+                    done = true;
+                    valid = true;
+                    System.out.println("Thanks for playing!");
+                } else {
+                    System.out.println("Enter a valid response please: [Y/N]");
+                    valid = false;
                 }
-                else {
-                    System.out.println("Sum of next roll = " + sum);
-                }
-            }
-            System.out.println("Do you want to play again? y/n");
-            answer = scan.nextLine();
-            if (answer.charAt(0) == 'y')  {
-                play = true;
-            }
-            else {
-                System.out.println("Thanks for playing!");
-                play = false;
-            }
-        }
+            }while (!valid);
+        }while (!done);
     }
-
-
 }
